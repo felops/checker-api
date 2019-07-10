@@ -1,0 +1,13 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "spread": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "rules": {
+    "semi": [1, "never"]
+  }
+}
