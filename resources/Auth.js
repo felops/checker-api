@@ -1,19 +1,16 @@
 module.exports = (app, models, passport) => {
-  app.post('/api/v1/auth/login', (req, res, next) => {
-    let post = req.body
+  app.post('/api/v1/auth/login',
+    passport.authenticate('local'),
+    (req, res) => {
+      res.json({ data: req.user })
+    }
+  )
 
-    models.entity['T_User']
-      .findOne({
-        attributes: ['email', 'firstName', 'lastName', 'phone'],
-        where: {
-          email: post.email,
-          password: post.password
-        }
-      })
-      .then(data =>
-        data ?
-          res.json({ data }) :
-          res.status(400).json({ error: 'Incorrect email or password' })
-      )
+  app.get('/api/v1/auth/logout', (req, res) => {
+    if(req.logout) {
+      req.logout()
+    }
+
+    res.end()
   })
 }
