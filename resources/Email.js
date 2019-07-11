@@ -33,4 +33,26 @@ module.exports = (app, models, isLoggedIn) => {
       })
       .then(data => res.json({ data }))
   })
+
+  app.get('/api/v1/email/kpi', isLoggedIn, (req, res) => {
+    models.sequelize.query(
+      'SELECT ' +
+      	'( ' +
+          'SELECT COUNT(id) ' +
+          'FROM T_EmailHistory ' +
+          'WHERE user = ? ' +
+        ') totalEmails, ' +
+      	'( ' +
+          'SELECT COUNT(id) ' +
+          'FROM T_EmailHistory ' +
+          'WHERE user = ? ' +
+          'AND   isValid = 1 ' +
+        ') validEmails',
+      {
+        replacements: [req.user.id, req.user.id],
+        type: models.sequelize.QueryTypes.SELECT
+      }
+    )
+      .then(data => res.json({ data: data[0] }))
+  })
 }
