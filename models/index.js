@@ -1,4 +1,3 @@
-const fs        = require("fs")
 const path      = require("path")
 const Sequelize = require("sequelize")
 
@@ -18,13 +17,8 @@ let db = {
   Sequelize: Sequelize
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => (file.indexOf(".") !== 0) && (file !== "index.js"))
-  .forEach(file => {
-    let model = sequelize.import(path.join(__dirname, file))
-    db.entity[model.name] = model
-  })
+db.entity['T_EmailHistory'] = sequelize.import(path.join(__dirname, 'T_EmailHistory.js'))
+db.entity['T_User'] = sequelize.import(path.join(__dirname, 'T_User.js'))
 
 db.entity['T_User'].hasMany(db.entity['T_EmailHistory'], {foreignKey: 'user'})
 db.entity['T_EmailHistory'].belongsTo(db.entity['T_User'], {foreignKey: 'user'})
