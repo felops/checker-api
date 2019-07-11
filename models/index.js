@@ -12,15 +12,14 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME
 })
 
 let db = {
-  entity: {},
-  sequelize: sequelize,
-  Sequelize: Sequelize
+  table: {},
+  sequelize: sequelize
 }
 
-db.entity['T_EmailHistory'] = sequelize.import(path.join(__dirname, 'T_EmailHistory.js'))
-db.entity['T_User'] = sequelize.import(path.join(__dirname, 'T_User.js'))
+db.table.Email = sequelize.import(path.join(__dirname, 'T_EmailHistory.js'))
+db.table.User = sequelize.import(path.join(__dirname, 'T_User.js'))
 
-db.entity['T_User'].hasMany(db.entity['T_EmailHistory'], {foreignKey: 'user'})
-db.entity['T_EmailHistory'].belongsTo(db.entity['T_User'], {foreignKey: 'user'})
+db.table.User.hasMany(db.table.Email, {foreignKey: 'user'})
+db.table.Email.belongsTo(db.table.User, {foreignKey: 'user'})
 
 module.exports = db

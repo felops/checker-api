@@ -3,7 +3,7 @@ module.exports = (app, models, isLoggedIn) => {
     let { email } = req.body,
         regex = new RegExp(/[a-z0-9.+_"-]{2,}@[a-z0-9]{2,}[.][a-z]{2,}/i)
 
-    models.entity['T_EmailHistory']
+    models.table.Email
       .create({
         email: email,
         user: req.user.id,
@@ -13,7 +13,7 @@ module.exports = (app, models, isLoggedIn) => {
   })
 
   app.get('/api/v1/email', isLoggedIn, (req, res) => {
-    models.entity['T_EmailHistory']
+    models.table.Email
       .findAll({
         where: {
           user: req.user.id
@@ -23,7 +23,7 @@ module.exports = (app, models, isLoggedIn) => {
   })
 
   app.get('/api/v1/email/latest', isLoggedIn, (req, res) => {
-    models.entity['T_EmailHistory']
+    models.table.Email
       .findAll({
         where: {
           user: req.user.id

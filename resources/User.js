@@ -4,7 +4,7 @@ module.exports = (app, models, isLoggedIn) => {
   app.post('/api/v1/user', (req, res) => {
     let post = req.body
 
-    models.entity['T_User']
+    models.table.User
       .findOne({ where: { email: post.email } })
       .then(data => {
         if(data) {
@@ -18,7 +18,7 @@ module.exports = (app, models, isLoggedIn) => {
                 password: hash
               }
 
-              models.entity['T_User']
+              models.table.User
                 .create(post)
                 .then(data => res.json({ data }))
           })

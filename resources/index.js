@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 
 passport.use(new LocalStrategy({ usernameField : 'email' },
   (email, password, done) => {
-    models.entity['T_User']
+    models.table.User
       .findOne({ where: { email: email } })
       .then((user, err) => {
         if (err) { return done(err) }
@@ -41,7 +41,7 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((id, done) => {
-  models.entity['T_User']
+  models.table.User
     .findByPk(id)
     .then((user, err) => done(err, user.dataValues))
 })
