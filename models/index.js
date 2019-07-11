@@ -1,4 +1,3 @@
-const path      = require("path")
 const Sequelize = require("sequelize")
 
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
@@ -16,8 +15,8 @@ let db = {
   sequelize: sequelize
 }
 
-db.table.Email = sequelize.import(path.join(__dirname, 'T_EmailHistory.js'))
-db.table.User = sequelize.import(path.join(__dirname, 'T_User.js'))
+db.table.Email = sequelize.import('T_EmailHistory.js')
+db.table.User = sequelize.import('T_User.js')
 
 db.table.User.hasMany(db.table.Email, {foreignKey: 'user'})
 db.table.Email.belongsTo(db.table.User, {foreignKey: 'user'})
