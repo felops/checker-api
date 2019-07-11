@@ -9,6 +9,7 @@ const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const slowDown = require("express-slow-down")
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -65,6 +66,13 @@ isLoggedIn = (req, res, next) => {
 
   res.status(302).redirect('/sign-in')
 }
+
+// slow down after 3 failed attempts to log in
+app.use('/api/v1/auth/login', slowDown({
+  windowMs: 30 * 60 * 1000,  // 30 minutes
+  delayAfter: 3,
+  delayMs: 500
+}))
 
 // import the API resources
 require('./Auth.js')(app, models, passport)
