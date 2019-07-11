@@ -8,6 +8,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    firstName: {
+      type: DataTypes.STRING(32),
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING(32),
+      allowNull: false
+    },
     email: {
       type: DataTypes.STRING(64),
       allowNull: false
@@ -17,18 +25,5 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    firstName: {
-      type: DataTypes.STRING(32),
-      allowNull: false
-    },
-    lastName: {
-      type: DataTypes.STRING(32),
-      allowNull: false
-    },
-    phone: {
-      type: DataTypes.STRING(16),
-      allowNull: false,
-      defaultValue: ''
-    }
   })
 }
