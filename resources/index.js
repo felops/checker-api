@@ -6,6 +6,7 @@ const fs = require("fs")
 const path = require("path")
 const bcrypt = require('bcrypt')
 const session = require('express-session')
+const FileStore = require('session-file-store')(session)
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
@@ -47,6 +48,10 @@ passport.deserializeUser((id, done) => {
 })
 
 app.use(session({
+  store: new FileStore({
+    path : './sessions/'
+  }),
+  secret: 'JaRUtWQUBhDXnOTYc92SXetVosWGojsq',
   resave: true,
   saveUninitialized: false,
   secret: 'uq3hJsVFiT2vCCZnVxzsPIDOoGSUOKZX'
