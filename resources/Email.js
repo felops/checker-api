@@ -1,7 +1,7 @@
 module.exports = (app, models, isLoggedIn) => {
   app.post('/api/v1/email/validate', isLoggedIn, (req, res) => {
     let { email } = req.body,
-        regex = new RegExp(/[a-z0-9.+_"-]{2,}@[a-z0-9]{2,}[.][a-z0-9]{2,}/i)
+        regex = new RegExp(/[a-z0-9.+_"-]{2,}@[a-z0-9]{2,}[.][a-z]{2,}/i)
 
     models.entity['T_EmailHistory']
       .create({
