@@ -1,4 +1,4 @@
-module.exports = (app, models, passport) => {
+module.exports = (app, passport) => {
   app.post('/api/v1/auth/login',
     passport.authenticate('local'),
     (req, res) => {

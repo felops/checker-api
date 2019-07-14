@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt')
 
-module.exports = (app, models, isLoggedIn) => {
+module.exports = (app, User) => {
   app.post('/api/v1/user', (req, res) => {
     let post = req.body
 
-    models.table.User
+    User
       .findOne({ where: { email: post.email } })
       .then(data => {
         if(data) {
@@ -18,7 +18,7 @@ module.exports = (app, models, isLoggedIn) => {
                 password: hash
               }
 
-              models.table.User
+              User
                 .create(post)
                 .then(data => res.json({ data }))
           })

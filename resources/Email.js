@@ -1,9 +1,9 @@
-module.exports = (app, models, isLoggedIn) => {
+module.exports = (app, Email, sequelize, isLoggedIn) => {
   app.post('/api/v1/email/validate', isLoggedIn, (req, res) => {
     let { email } = req.body,
         regex = new RegExp(/[a-z0-9.+_"-]{2,}@[a-z0-9]{2,}[.][a-z]{2,}/i)
 
-    models.table.Email
+    Email
       .create({
         email: email,
         user: req.user.id,
@@ -13,7 +13,7 @@ module.exports = (app, models, isLoggedIn) => {
   })
 
   app.get('/api/v1/email', isLoggedIn, (req, res) => {
-    models.table.Email
+    Email
       .findAll({
         where: {
           user: req.user.id
@@ -23,7 +23,7 @@ module.exports = (app, models, isLoggedIn) => {
   })
 
   app.get('/api/v1/email/latest', isLoggedIn, (req, res) => {
-    models.table.Email
+    Email
       .findAll({
         where: {
           user: req.user.id
@@ -35,7 +35,7 @@ module.exports = (app, models, isLoggedIn) => {
   })
 
   app.get('/api/v1/email/kpi', isLoggedIn, (req, res) => {
-    models.sequelize.query(
+    sequelize.query(
       'SELECT ' +
       	'( ' +
           'SELECT COUNT(id) ' +
@@ -50,7 +50,7 @@ module.exports = (app, models, isLoggedIn) => {
         ') validEmails',
       {
         replacements: [req.user.id, req.user.id],
-        type: models.sequelize.QueryTypes.SELECT
+        type: sequelize.QueryTypes.SELECT
       }
     )
       .then(data => res.json({ data: data[0] }))

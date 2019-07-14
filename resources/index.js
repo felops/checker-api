@@ -73,11 +73,11 @@ app.use('/api/v1/auth/login', slowDown({
 }))
 
 // import the API resources
-require('./Auth.js')(app, models, passport)
-require('./Email.js')(app, models, isLoggedIn)
-require('./User.js')(app, models, isLoggedIn)
+require('./Auth.js')(app, passport)
+require('./Email.js')(app, models.table.Email, models.sequelize, isLoggedIn)
+require('./User.js')(app, models.table.User)
 
 module.exports = {
   app: app,
-  models: models
+  sequelize: models.sequelize
 }
